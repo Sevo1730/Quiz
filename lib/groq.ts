@@ -1,9 +1,11 @@
 import Groq from "groq-sdk";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+function getGroq() {
+  return new Groq({ apiKey: process.env.GROQ_API_KEY });
+}
 
 export async function summarizeArticle(content: string): Promise<string> {
-  const res = await groq.chat.completions.create({
+  const res = await getGroq().chat.completions.create({
     model: "llama-3.3-70b-versatile",
     messages: [
       {
@@ -18,7 +20,7 @@ export async function summarizeArticle(content: string): Promise<string> {
 export async function generateQuiz(
   articleContent: string
 ): Promise<{ question: string; options: string[]; answer: string }[]> {
-  const res = await groq.chat.completions.create({
+  const res = await getGroq().chat.completions.create({
     model: "llama-3.3-70b-versatile",
     messages: [
       {
